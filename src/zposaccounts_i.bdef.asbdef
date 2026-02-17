@@ -1,0 +1,107 @@
+managed implementation in class zbp_posaccounts_i unique;
+strict ( 2 );
+with draft;
+define behavior for zposaccounts_i alias posaccounts
+persistent table zposaccounts
+draft table zposaccount_d
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;// ( authorization : global );
+  update;
+  delete;
+  field ( readonly : update ) Poskunnr, Channel, Division;
+  association _fieldmap { create; with draft; }
+  draft action Edit;
+  draft action Discard;
+  draft action Resume;
+  draft action Activate optimized;
+  draft determine action Prepare;
+
+  action accupload result[1] $self;
+
+
+  mapping for zposaccounts
+  {
+  poskunnr = poskunnr;
+  channel = channel;
+  division = division;
+  bukrs    = bukrs;
+  posfrequency = posfrequency;
+  columns  = columns;
+  description = description;
+  localcreatedby = local_created_by;
+  localcreatedat = local_created_at;
+  locallastchangedby = local_last_changed_by;
+  locallastchangedat = local_last_changed_at;
+  LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for zposfiledmap_i //alias <alias_name>
+persistent table zposfieldmap
+draft table zposfieldmap_d
+lock dependent by _posaccounts
+
+authorization dependent by _posaccounts
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+  field ( readonly ) Poskunnr, Channel, Division;
+  association _posaccounts{with draft;}
+  association _posdatabase { create; with draft; }
+
+
+  mapping for zposfieldmap
+  {
+  poskunnr = poskunnr;
+  channel = channel;
+  division = division;
+  excelfield = excelfield;
+  targetfield = targetfield;
+  localcreatedby = local_created_by;
+  localcreatedat = local_created_at;
+  locallastchangedby = local_last_changed_by;
+  locallastchangedat = local_last_changed_at;
+  }
+}
+
+define behavior for zposdatabase_i //alias <alias_name>
+persistent table zposdatabase
+draft table zposdatabase_d
+lock dependent by _accounts
+authorization dependent by _accounts
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+  field(numbering : managed, readonly ) RecordId;
+  field ( readonly ) Poskunnr, Channel, Division;
+  association _accounts {with draft;}
+  association _fieldmap {with draft;}
+
+
+  mapping for zposdatabase
+  {
+  recordid = record_id;
+  poskunnr = poskunnr;
+  channel = channel;
+  division = division;
+  bukrs = bukrs;
+  posfrequency = posfrequency;
+  datefrom = datefrom;
+  dateto = dateto;
+  qtysold =qtysold;
+  qtyavailable = qtyavailable;
+  kunnrmatnr = kunnrmatnr;
+  filename   = filename;
+  localcreatedby = local_created_by;
+  localcreatedat = local_created_at;
+  locallastchangedby = local_last_changed_by;
+  locallastchangedat = local_last_changed_at;
+  }
+
+}

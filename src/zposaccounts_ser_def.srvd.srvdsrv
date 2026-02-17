@@ -1,0 +1,6 @@
+@EndUserText.label: 'accounts service defination.'
+define service Zposaccounts_ser_def {
+  expose zposaccounts_c;
+  expose zposfieldmap_c;
+  expose zposdatabase_c;
+}

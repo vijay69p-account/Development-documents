@@ -1,0 +1,82 @@
+@Metadata.layer: #CORE
+@Search.searchable: true
+@UI.headerInfo:{
+typeName: 'POS',
+typeNamePlural: 'POS Accounts'
+}
+annotate entity yyaccounts_c
+    with 
+{
+
+@UI.facet:[{ id: 'POS',
+   purpose: #STANDARD,
+    type: #IDENTIFICATION_REFERENCE,
+    position: 10,
+    label: 'POS Accounts'},
+
+    
+    {id: 'Fieldmap',
+      purpose: #STANDARD,
+    type: #LINEITEM_REFERENCE,
+     position: 20,
+     label: 'Fieldmap',
+    targetElement: '_FIELDMAP'},
+  
+   {id: 'PRODMAP',
+    purpose: #STANDARD,
+  type: #LINEITEM_REFERENCE,
+  position: 30,
+  label: 'Prodmap',
+  targetElement: '_prodmap'},
+  
+  {id: 'filename',
+    purpose: #STANDARD,
+  type: #LINEITEM_REFERENCE,
+  position: 40,
+  label: 'Filenames',
+  targetElement: '_files'}
+  ]
+
+@UI:{ lineItem: [{position: 10, importance: #HIGH },
+                   {type: #FOR_ACTION , dataAction : 'ExcelUpload', label: 'ExcelUpload',invocationGrouping:#CHANGE_SET }]}
+@UI.identification: [{ position: 10 }]
+//@UI.lineItem:[{ position : 10 }]
+ @Search.defaultSearchElement: true
+ @UI.selectionField: [{ position: 10 }]
+    Poskunnr;
+@UI.lineItem:[{ position : 20 }] 
+@UI.identification: [{ position: 20 }]   
+    Channel;
+@UI.lineItem:[{ position : 30 }] 
+@UI.identification: [{ position: 30 }]   
+    Division;
+@UI.lineItem:[{ position : 40 }]    
+@UI.identification: [{ position: 40 }]
+    Bukrs;
+@UI.lineItem:[{ position : 50 }]    
+@UI.identification: [{ position: 50 }]
+    Posfrequency;
+@UI.lineItem:[{ position : 60 }]    
+@UI.identification: [{ position: 60 }]
+    Columns;
+@UI.lineItem:[{ position : 70 }]    
+@UI.identification: [{ position: 70 }]
+    Description;
+@UI.lineItem:[{ position : 80 }]    
+@UI.identification: [{ position: 80 }]
+    LocalCreatedBy;
+@UI.lineItem:[{ position : 90 }]    
+@UI.identification: [{ position: 90 }]
+    LocalCreatedAt;
+@UI.lineItem:[{ position : 100 }]    
+@UI.identification: [{ position: 110 }]
+    LocalLastChangedBy;
+@UI.lineItem:[{ position : 110 }]    
+@UI.identification: [{ position: 110 }]
+    LocalLastChangedAt;
+@UI.lineItem:[{ position : 120 }]    
+@UI.identification: [{ position: 120 }]
+    LastChangedAt;
+   
+    /* Associations */
+}

@@ -1,0 +1,39 @@
+projection;
+strict ( 2 );
+
+use draft;
+
+define behavior for zposaccounts_c alias posaccounts
+use etag
+{
+  use create;
+
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+  use action Activate;
+
+  use association _fieldmap { create; with draft; }
+}
+
+define behavior for zposfieldmap_c alias posfieldmap
+{
+  use update;
+  use delete;
+
+  use association _posaccounts { with draft;}
+  use association _posdatabase { create; with draft; }
+}
+
+define behavior for zposdatabase_c alias posdatabase
+{
+  use update;
+  use delete;
+
+  use association _accounts{ with draft;}
+  use association _fieldmap{ with draft;}
+}

@@ -1,0 +1,47 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for yyaccounts_c //alias <alias_name>
+use etag
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Discard;
+  use action Resume;
+  use action Activate;
+  use action Prepare;
+
+  use action ExcelUpload;
+
+  use association _FIELDMAP { create; with draft; }
+  use association _files { create; with draft; }
+  use association _prodmap { create; with draft; }
+}
+
+define behavior for yyfieldmap_c //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _ACCOUNTS { with draft; }
+}
+
+define behavior for yyposfiles_c //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _accounts { with draft; }
+}
+
+define behavior for yyprodmap_c //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _accounts { with draft; }
+}

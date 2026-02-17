@@ -1,0 +1,118 @@
+managed implementation in class zbp_yaccounts_i unique;
+strict ( 2 );
+with draft;
+define behavior for YYACCOUNTS_I //alias <alias_name>
+persistent table zposaccounts
+draft table zposaccount_d
+lock master
+total etag lastchangedat
+authorization master ( instance )
+etag master locallastchangedat
+{
+  create; //( authorization : global );
+  update;
+  delete;
+  field ( readonly :update ) Poskunnr, Channel, Division;
+  association _FIELDMAP { create; with draft; }
+  association _files { create; with draft;}
+  association _prodmap { create; with draft; }
+
+  draft action Edit;
+  draft action Discard;
+  draft action Resume;
+  draft action Activate optimized;
+  draft determine action Prepare;
+
+  static action ExcelUpload deep parameter ZRK_D_UPLOAD_EXCEL ;
+
+  mapping for zposaccounts{
+  poskunnr = poskunnr;
+  channel = channel;
+  division = division;
+  bukrs    = bukrs;
+  posfrequency = posfrequency;
+  columns  = columns;
+  description = description;
+  localcreatedby = local_created_by;
+  localcreatedat = local_created_at;
+  locallastchangedby = local_last_changed_by;
+  locallastchangedat = local_last_changed_at;
+  LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for YYFIELDMAP_I //alias <alias_name>
+persistent table zposfieldmap
+draft table zposfieldmap_d
+lock dependent by _ACCOUNTS
+authorization dependent by _ACCOUNTS
+etag master locallastchangedat
+{
+  update;
+  delete;
+  field ( readonly : update ) Poskunnr, Channel, Division;
+  association _ACCOUNTS {with draft;}
+
+  mapping for zposfieldmap{
+  poskunnr = poskunnr;
+  channel = channel;
+  division = division;
+  excelfield = excelfield;
+  targetfield = targetfield;
+  localcreatedby = local_created_by;
+  localcreatedat = local_created_at;
+  locallastchangedby = local_last_changed_by;
+  locallastchangedat = local_last_changed_at;
+  }
+}
+
+define behavior for YYPOSFILES_I //alias <alias_name>
+persistent table zposfiles
+draft table zposfiles_d
+lock dependent by _accounts
+authorization dependent by _accounts
+etag master locallastchangedat
+{
+  update;
+  delete;
+  field ( readonly :update ) Poskunnr, Channel, Division,fileid;
+  association _accounts{with draft;}
+  mapping for zposfiles {
+  poskunnr = poskunnr;
+  channel  = channel;
+  division = division;
+  fileid   = fileid;
+  filename = filename;
+  localcreatedby = local_created_by;
+  localcreatedat = local_created_at;
+  locallastchangedby = local_last_changed_by;
+  locallastchangedat = last_chnaged_at;
+
+  }
+}
+
+define behavior for YYPRODMAP_I //alias <alias_name>
+persistent table zposprodmap
+draft table zposprodmap_d
+lock dependent by _accounts
+authorization dependent by _accounts
+etag master locallastchangedat
+{
+  update;
+  delete;
+  field ( readonly :update ) Poskunnr, Channel, Division;
+  association _accounts{with draft;}
+  mapping for zposprodmap {
+  poskunnr = poskunnr;
+  channel  = channel;
+  division = Division;
+  kunnrmatnr = kunnrmatnr;
+  material = material;
+  localcreatedby = local_created_by;
+  localcreatedat = local_created_at;
+  locallastchangedby = local_last_changed_by;
+  locallastchangedat = local_last_changed_at;
+
+
+  }
+}

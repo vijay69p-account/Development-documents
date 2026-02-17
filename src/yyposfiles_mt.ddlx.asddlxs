@@ -1,0 +1,48 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo:{
+typeName: 'POSfl',
+typeNamePlural: 'POS Files'
+}
+annotate entity yyposfiles_c
+    with 
+{
+   
+   @UI.facet:[{ id: 'POSfl',
+   purpose: #STANDARD,
+    type: #IDENTIFICATION_REFERENCE,
+    position: 30,
+    label: 'POS Files'}]
+    
+   @UI.identification: [{ position: 10 }]
+    @UI.lineItem:[{position: 10}]
+   Poskunnr;
+   @UI.identification: [{ position: 20 }]
+    @UI.lineItem:[{position: 20}]
+   Channel;
+   @UI.identification: [{ position: 30 }]
+    @UI.lineItem:[{position: 30}]
+   Division;
+   @UI.identification: [{ position: 40 }]
+    @UI.lineItem:[{position: 40}]
+   Fileid;
+   @UI.identification: [{ position: 50 }]
+    @UI.lineItem:[{position: 50}]
+   Filename;
+   @UI.identification: [{ position: 60 }]
+    @UI.lineItem:[{position: 60}]
+   LocalCreatedBy;
+   @UI.identification: [{ position: 70 }]
+    @UI.lineItem:[{position: 70}]
+   LocalCreatedAt;
+   @UI.identification: [{ position: 80 }]
+    @UI.lineItem:[{position: 80}]
+   LocalLastChangedBy;
+   @UI.identification: [{ position: 90 }]
+    @UI.lineItem:[{position: 90}]
+   LocalLastChangedAt;
+   @UI.identification: [{ position: 100 }]
+    @UI.lineItem:[{position: 100}]
+   LastChnagedAt;
+   
+}

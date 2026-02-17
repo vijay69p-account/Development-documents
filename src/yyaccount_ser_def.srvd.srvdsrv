@@ -1,0 +1,7 @@
+@EndUserText.label: 'yyacount service'
+define service Yyaccount_ser_def {
+  expose yyaccounts_c;
+  expose yyfieldmap_c;
+  expose yyposfiles_c;
+  expose yyprodmap_c;
+}
