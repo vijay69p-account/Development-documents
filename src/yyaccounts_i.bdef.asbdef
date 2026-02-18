@@ -9,7 +9,7 @@ total etag lastchangedat
 authorization master ( instance )
 etag master locallastchangedat
 {
-  create; //( authorization : global );
+  create;// ( authorization : global );
   update;
   delete;
   field ( readonly :update ) Poskunnr, Channel, Division;
@@ -23,7 +23,7 @@ etag master locallastchangedat
   draft action Activate optimized;
   draft determine action Prepare;
 
-  static action ExcelUpload deep parameter ZRK_D_UPLOAD_EXCEL ;
+  action ExcelUpload deep parameter ZRK_D_UPLOAD_EXCEL ;
 
   mapping for zposaccounts{
   poskunnr = poskunnr;
@@ -52,7 +52,7 @@ etag master locallastchangedat
   delete;
   field ( readonly : update ) Poskunnr, Channel, Division;
   association _ACCOUNTS {with draft;}
-
+ action ExcelUploadf deep parameter ZRK_D_UPLOAD_EXCEL ;
   mapping for zposfieldmap{
   poskunnr = poskunnr;
   channel = channel;
@@ -77,6 +77,7 @@ etag master locallastchangedat
   delete;
   field ( readonly :update ) Poskunnr, Channel, Division,fileid;
   association _accounts{with draft;}
+  //static action ExcelUpload deep parameter ZRK_D_UPLOAD_EXCEL ;
   mapping for zposfiles {
   poskunnr = poskunnr;
   channel  = channel;

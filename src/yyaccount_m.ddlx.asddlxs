@@ -37,10 +37,10 @@ annotate entity yyaccounts_c
   targetElement: '_files'}
   ]
 
-@UI:{ lineItem: [{position: 10, importance: #HIGH },
-                   {type: #FOR_ACTION , dataAction : 'ExcelUpload', label: 'ExcelUpload',invocationGrouping:#CHANGE_SET }]}
+//@UI:{ lineItem: [{position: 10, importance: #HIGH },
+//                   {type: #FOR_ACTION , dataAction : 'ExcelUpload', label: 'ExcelUpload',invocationGrouping:#CHANGE_SET }]}
 @UI.identification: [{ position: 10 }]
-//@UI.lineItem:[{ position : 10 }]
+@UI.lineItem:[{ position : 10 }]
  @Search.defaultSearchElement: true
  @UI.selectionField: [{ position: 10 }]
     Poskunnr;
