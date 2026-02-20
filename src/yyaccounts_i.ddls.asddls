@@ -5,6 +5,9 @@ define root view entity YYACCOUNTS_I as select from zposaccounts
 composition[0..*] of YYFIELDMAP_I as _FIELDMAP
 composition[0..*] of YYPRODMAP_I as _prodmap
 composition[0..*] of YYPOSFILES_I as _files
+composition[0..*] of yyposdatabase_i as _posdatabase 
+
+
 {
     key poskunnr as Poskunnr,
     key channel as Channel,
@@ -25,5 +28,6 @@ composition[0..*] of YYPOSFILES_I as _files
     last_changed_at as LastChangedAt,
     _FIELDMAP, // Make association public
     _prodmap,
-    _files
+    _files,
+    _posdatabase
 }

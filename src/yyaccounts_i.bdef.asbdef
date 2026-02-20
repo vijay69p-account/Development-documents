@@ -16,6 +16,7 @@ etag master locallastchangedat
   association _FIELDMAP { create; with draft; }
   association _files { create; with draft; }
   association _prodmap { create; with draft; }
+  association _posdatabase{ create; with draft; }
 
   draft action Edit;
   draft action Discard;
@@ -23,7 +24,7 @@ etag master locallastchangedat
   draft action Activate optimized;
   draft determine action Prepare;
 
-   action ExcelUpload deep parameter ZRK_D_UPLOAD_EXCEL;
+  action ExcelUpload deep parameter ZRK_D_UPLOAD_EXCEL;
 
   mapping for zposaccounts
     {
@@ -111,6 +112,35 @@ etag master locallastchangedat
       division           = Division;
       kunnrmatnr         = kunnrmatnr;
       material           = material;
+      localcreatedby     = local_created_by;
+      localcreatedat     = local_created_at;
+      locallastchangedby = local_last_changed_by;
+      locallastchangedat = local_last_changed_at;
+    }
+}
+define behavior for yyposdatabase_i //alias <alias_name>
+persistent table zposdatabase
+draft table zposdatabase_d
+lock dependent by _accounts
+authorization dependent by _accounts
+etag master locallastchangedat
+{
+  update;
+  delete;
+  field ( readonly : update ) RECORDID, Poskunnr, Channel, Division;
+  association _accounts { with draft; }
+  mapping for zposdatabase
+    {
+      RECORDID           = RECORD_ID;
+      poskunnr           = poskunnr;
+      channel            = channel;
+      division           = division;
+      bukrs              = bukrs;
+      posfrequency       = posfrequency;
+      datefrom           = datefrom;
+      dateto             = dateto;
+      qtysold            = qtysold;
+      qtyavailable       = qtyavailable;
       localcreatedby     = local_created_by;
       localcreatedat     = local_created_at;
       locallastchangedby = local_last_changed_by;

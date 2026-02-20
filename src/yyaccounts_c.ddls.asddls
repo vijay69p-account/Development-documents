@@ -20,5 +20,7 @@ define root view entity yyaccounts_c
     /* Associations */
     _FIELDMAP : redirected to composition child yyfieldmap_c,
     _files    : redirected to composition child yyposfiles_c,
-    _prodmap  : redirected to composition child yyprodmap_c
+    _prodmap  : redirected to composition child yyprodmap_c,
+    _posdatabase : redirected to composition child yyposdatabase_c
+    
 }

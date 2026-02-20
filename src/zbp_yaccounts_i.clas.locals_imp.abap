@@ -51,9 +51,12 @@ CLASS lhc_YYACCOUNTS_I IMPLEMENTATION.
     DATA lt_sheet_data     TYPE STANDARD TABLE OF excel_fields.
     DATA ls_posdatabase    TYPE zposdatabase.
     DATA lt_posdatabase    TYPE TABLE OF zposdatabase.
-    FIELD-SYMBOLS :  <LV_kunnrmatnr>  TYPE any,
-                     <LV_qtysold>  TYPE any,
-                     <LV_QTYAVAILABLE> TYPE ANY.
+    DATA : lv_name    TYPE string,
+           lv_channel TYPE string,
+           lv_date    TYPE string.
+    FIELD-SYMBOLS : <LV_kunnrmatnr>   TYPE any,
+                    <LV_qtysold>      TYPE any,
+                    <lv_qtyavailable> TYPE any.
 
     lv_file_content = VALUE #( keys[ 1 ]-%param-_streamproperties-StreamProperty OPTIONAL ).
     DATA(lv_filename) = VALUE #( keys[ 1 ]-%param-_streamproperties-filename OPTIONAL ).
@@ -106,36 +109,44 @@ CLASS lhc_YYACCOUNTS_I IMPLEMENTATION.
 
         IF <ls_fieldmap>-Targetfield = 'KUNNRMATNR'.
 
-        SHIFT <ls_fieldmap>-Excelfield LEFT DELETING LEADING '0'.
-        data(lv_field) = | 'FIELD'{ <ls_fieldmap>-Excelfield }|.
-         ASSIGN COMPONENT LV_FIELD OF STRUCTURE ls_sheet_date TO <LV_kunnrmatnr>.
-        CLEAR LV_FIELD.
+          SHIFT <ls_fieldmap>-Excelfield LEFT DELETING LEADING '0'.
+          DATA(lv_field) = | 'FIELD'{ <ls_fieldmap>-Excelfield }|.
+          ASSIGN COMPONENT lv_field OF STRUCTURE ls_sheet_date TO <LV_kunnrmatnr>.
+          CLEAR lv_field.
         ENDIF.
 
         IF <ls_fieldmap>-Targetfield = 'QTYSOLD'.
 
-        SHIFT <ls_fieldmap>-Excelfield LEFT DELETING LEADING '0'.
-        lv_field = | 'FIELD'{ <ls_fieldmap>-Excelfield }|.
-         ASSIGN COMPONENT LV_FIELD OF STRUCTURE ls_sheet_date TO <LV_QTYSOLD>.
+          SHIFT <ls_fieldmap>-Excelfield LEFT DELETING LEADING '0'.
+          lv_field = | 'FIELD'{ <ls_fieldmap>-Excelfield }|.
+          ASSIGN COMPONENT lv_field OF STRUCTURE ls_sheet_date TO <lv_qtysold>.
 
         ENDIF.
 
         IF <ls_fieldmap>-Targetfield = 'QTYAVAILABLE'.
 
-        SHIFT <ls_fieldmap>-Excelfield LEFT DELETING LEADING '0'.
-        lv_field = | 'FIELD'{ <ls_fieldmap>-Excelfield }|.
-         ASSIGN COMPONENT LV_FIELD OF STRUCTURE ls_sheet_date TO <LV_QTYAVAILABLE>.
+          SHIFT <ls_fieldmap>-Excelfield LEFT DELETING LEADING '0'.
+          lv_field = | 'FIELD'{ <ls_fieldmap>-Excelfield }|.
+          ASSIGN COMPONENT lv_field OF STRUCTURE ls_sheet_date TO <lv_qtyavailable>.
 
         ENDIF.
 
       ENDLOOP.
+      SPLIT lv_filename AT ' ' INTO lv_name lv_channel lv_date .
 
       ls_posdatabase = VALUE #(   kunnrmatnr  = <LV_kunnrmatnr>
-                                  qtysold  = <LV_QTYSOLD>
-                                  qtyavailable = <LV_QTYAVAILABLE>
+                                  qtysold  = <lv_qtysold>
+                                  qtyavailable = <lv_qtyavailable>
+                                  datefrom = lv_date
+                                  dateto = lv_date
                                   local_created_by = cl_abap_context_info=>get_user_alias(  )
                                   local_created_at = cl_abap_context_info=>get_system_time( )  ).
 
+*      MODIFY ENTITIES OF yyaccounts_i
+*      ENTITY yyposdatabase_i
+*      UPDATE
+*      FROM VALUE #(
+*        (  %data = ls_posdatabase ) ).
 
 
     ENDLOOP.

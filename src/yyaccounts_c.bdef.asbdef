@@ -21,6 +21,7 @@ use etag
   use association _FIELDMAP { create; with draft; }
   use association _files { create; with draft; }
   use association _prodmap { create; with draft; }
+  use association _posdatabase{create;with draft; }
 }
 
 define behavior for yyfieldmap_c //alias <alias_name>
@@ -42,6 +43,14 @@ define behavior for yyposfiles_c //alias <alias_name>
 }
 
 define behavior for yyprodmap_c //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _accounts { with draft; }
+}
+
+define behavior for yyposdatabase_c //alias <alias_name>
 {
   use update;
   use delete;
