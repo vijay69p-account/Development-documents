@@ -1,31 +1,3 @@
-CLASS lhc_yyfieldmap_i DEFINITION INHERITING FROM cl_abap_behavior_handler.
-
-  PRIVATE SECTION.
-
-    METHODS ExcelUploadf FOR MODIFY
-      IMPORTING keys FOR ACTION YYFIELDMAP_I~ExcelUploadf.
-
-ENDCLASS.
-
-CLASS lhc_yyfieldmap_i IMPLEMENTATION.
-
-  METHOD ExcelUploadf.
-
-    READ ENTITIES OF yyaccounts_i IN LOCAL MODE
-      ENTITY yyaccounts_i BY \_fieldmap
-      ALL FIELDS
-      WITH CORRESPONDING #( keys )
-      RESULT DATA(fieldmap).
-
-      READ ENTITIES OF yyaccounts_c
-    ENTITY yyaccounts_c
-    ALL FIELDS WITH
-    CORRESPONDING #( keys )
-    RESULT DATA(accounts1).
-
-  ENDMETHOD.
-
-ENDCLASS.
 
 CLASS lhc_YYACCOUNTS_I DEFINITION INHERITING FROM cl_abap_behavior_handler.
   PRIVATE SECTION.
@@ -51,6 +23,12 @@ CLASS lhc_YYACCOUNTS_I IMPLEMENTATION.
     ALL FIELDS WITH
     CORRESPONDING #( keys )
     RESULT DATA(posaccounts).
+
+    READ ENTITIES OF yyaccounts_i IN LOCAL MODE
+      ENTITY yyaccounts_i BY \_fieldmap
+       ALL FIELDS
+      WITH CORRESPONDING #( posaccounts )
+      RESULT DATA(fieldmap).
 
     "read the table for the posaccounts.
     DATA(lv_count) = lines( posaccounts ).

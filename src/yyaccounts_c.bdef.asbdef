@@ -8,7 +8,7 @@ use etag
   use create;
   use update;
   use delete;
-  //use action ExcelUpload;
+  use action ExcelUpload;
 
   use action Edit;
   use action Discard;
@@ -27,7 +27,7 @@ define behavior for yyfieldmap_c //alias <alias_name>
 {
   use update;
   use delete;
-  use action ExcelUploadf;
+ // use action ExcelUploadf;
 
   use association _ACCOUNTS { with draft; }
 }
